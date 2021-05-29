@@ -1,0 +1,1258 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * Game.java
+ *
+ * Created on Jun 13, 2020, 11:41:27 AM
+ */
+
+package snakesandladders;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+/*
+ * start
+ * turnSelector
+ * rollDice
+ * move
+ * upLadder
+ * snakeBite
+ * moveNotPossible
+ * threeConsecutiveSixes
+ * notOpened
+ * setBox
+ * getBox
+ * finished
+ * gameOver
+ */
+
+/**
+ *
+ * @author PIYUSH GUPTA
+ */
+public class Game extends javax.swing.JFrame {
+
+    ArrayList<Integer> lastThreeThrows = new ArrayList<Integer>();
+    boolean rollDice = false;
+    boolean movePawn = false;
+    int numberRolled;
+    Dice dice = new Dice();
+    Timer timer;
+    boolean gameFinished = true;
+    int numberOfPlayers = 0;
+    int playersLeft;
+    int k = 0;
+    int winningPosition = 0;
+
+    String winners = "";
+    String turnTellerString = "";
+    String currentMode = "Dark";
+    Player currentPlayer = null;
+    ArrayList<String> playerNames = new ArrayList<String>();
+    ArrayList<String> playerColors = new ArrayList<String>();
+    ArrayList<Player> players = new ArrayList<Player>();
+    ArrayList<JLabel> track = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder1 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder2 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder3 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder4 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder5 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder6 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder7 = new ArrayList<JLabel>();
+    ArrayList<JLabel> ladder8 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake1 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake2 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake3 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake4 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake5 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake6 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake7 = new ArrayList<JLabel>();
+    ArrayList<JLabel> snake8 = new ArrayList<JLabel>();
+    ArrayList<ArrayList<JLabel>> ladders = new ArrayList<ArrayList<JLabel>>();
+    ArrayList<ArrayList<JLabel>> snakes = new ArrayList<ArrayList<JLabel>>();
+    ArrayList<Integer> turnList = new ArrayList<Integer>();
+
+    public Game() {
+        initComponents();
+        initializeArrayLists();
+    }
+    public void initializeArrayLists(){
+        Collections.addAll(playerColors, "Blue", "Green", "Red", "Yellow");
+        Collections.addAll(track, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10,
+                                    l11, l12, l13, l14, l15, l16, l17, l18, l19, l20,
+                                    l21, l22, l23, l24, l25, l26, l27, l28, l29, l30,
+                                    l31, l32, l33, l34, l35, l36, l37, l38, l39, l40,
+                                    l41, l42, l43, l44, l45, l46, l47, l48, l49, l50,
+                                    l51, l52, l53, l54, l55, l56, l57, l58, l59, l60,
+                                    l61, l62, l63, l64, l65, l66, l67, l68, l69, l70,
+                                    l71, l72, l73, l74, l75, l76, l77, l78, l79, l80,
+                                    l81, l82, l83, l84, l85, l86, l87, l88, l89, l90,
+                                    l91, l92, l93, l94, l95, l96, l97, l98, l99, l100);
+        Collections.addAll(ladder1, l1, l19, l22, l23, l38);
+        Collections.addAll(ladder2, l4, l5, l15, l14);
+        Collections.addAll(ladder3, l9, l12, l30, l31);
+        Collections.addAll(ladder4, l21, l40, l42);
+        Collections.addAll(ladder5, l28, l34, l47, l55, l65, l76, l84);
+        Collections.addAll(ladder6, l51, l52, l68, l67);
+        Collections.addAll(ladder7, l72, l90, l91);
+        Collections.addAll(ladder8, l80, l81, l82, l99);
+        Collections.addAll(ladders, ladder1, ladder2, ladder3, ladder4, ladder5, ladder6, ladder7, ladder8);
+
+        Collections.addAll(snake1, l17, l16, l6, l7);
+        Collections.addAll(snake2, l54, l53, l48, l47, l34);
+        Collections.addAll(snake3, l62, l63, l58, l43, l38, l39, l22, l23, l18, l19);
+        Collections.addAll(snake4, l64, l63, l62, l59, l60);
+        Collections.addAll(snake5, l87, l86, l75, l65, l55, l45, l44, l36);
+        Collections.addAll(snake6, l93, l92, l89, l88, l73);
+        Collections.addAll(snake7, l95, l96, l85, l86, l75);
+        Collections.addAll(snake8, l98, l83, l82, l79);
+        Collections.addAll(snakes, snake1, snake2, snake3, snake4, snake5, snake6, snake7, snake8);
+    }
+
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        mainPanel = new javax.swing.JPanel();
+        finish = new javax.swing.JLabel();
+        start = new javax.swing.JLabel();
+        boardPanel = new javax.swing.JPanel();
+        l1 = new javax.swing.JLabel();
+        l2 = new javax.swing.JLabel();
+        l3 = new javax.swing.JLabel();
+        l4 = new javax.swing.JLabel();
+        l5 = new javax.swing.JLabel();
+        l6 = new javax.swing.JLabel();
+        l7 = new javax.swing.JLabel();
+        l8 = new javax.swing.JLabel();
+        l9 = new javax.swing.JLabel();
+        l10 = new javax.swing.JLabel();
+        l20 = new javax.swing.JLabel();
+        l19 = new javax.swing.JLabel();
+        l18 = new javax.swing.JLabel();
+        l17 = new javax.swing.JLabel();
+        l16 = new javax.swing.JLabel();
+        l15 = new javax.swing.JLabel();
+        l14 = new javax.swing.JLabel();
+        l13 = new javax.swing.JLabel();
+        l12 = new javax.swing.JLabel();
+        l11 = new javax.swing.JLabel();
+        l21 = new javax.swing.JLabel();
+        l22 = new javax.swing.JLabel();
+        l23 = new javax.swing.JLabel();
+        l24 = new javax.swing.JLabel();
+        l25 = new javax.swing.JLabel();
+        l26 = new javax.swing.JLabel();
+        l27 = new javax.swing.JLabel();
+        l28 = new javax.swing.JLabel();
+        l29 = new javax.swing.JLabel();
+        l30 = new javax.swing.JLabel();
+        l40 = new javax.swing.JLabel();
+        l39 = new javax.swing.JLabel();
+        l38 = new javax.swing.JLabel();
+        l37 = new javax.swing.JLabel();
+        l36 = new javax.swing.JLabel();
+        l35 = new javax.swing.JLabel();
+        l34 = new javax.swing.JLabel();
+        l33 = new javax.swing.JLabel();
+        l32 = new javax.swing.JLabel();
+        l31 = new javax.swing.JLabel();
+        l41 = new javax.swing.JLabel();
+        l42 = new javax.swing.JLabel();
+        l43 = new javax.swing.JLabel();
+        l44 = new javax.swing.JLabel();
+        l45 = new javax.swing.JLabel();
+        l46 = new javax.swing.JLabel();
+        l47 = new javax.swing.JLabel();
+        l48 = new javax.swing.JLabel();
+        l49 = new javax.swing.JLabel();
+        l50 = new javax.swing.JLabel();
+        l60 = new javax.swing.JLabel();
+        l59 = new javax.swing.JLabel();
+        l58 = new javax.swing.JLabel();
+        l57 = new javax.swing.JLabel();
+        l56 = new javax.swing.JLabel();
+        l55 = new javax.swing.JLabel();
+        l54 = new javax.swing.JLabel();
+        l53 = new javax.swing.JLabel();
+        l52 = new javax.swing.JLabel();
+        l51 = new javax.swing.JLabel();
+        l61 = new javax.swing.JLabel();
+        l62 = new javax.swing.JLabel();
+        l63 = new javax.swing.JLabel();
+        l64 = new javax.swing.JLabel();
+        l65 = new javax.swing.JLabel();
+        l66 = new javax.swing.JLabel();
+        l67 = new javax.swing.JLabel();
+        l68 = new javax.swing.JLabel();
+        l69 = new javax.swing.JLabel();
+        l70 = new javax.swing.JLabel();
+        l80 = new javax.swing.JLabel();
+        l79 = new javax.swing.JLabel();
+        l78 = new javax.swing.JLabel();
+        l77 = new javax.swing.JLabel();
+        l76 = new javax.swing.JLabel();
+        l75 = new javax.swing.JLabel();
+        l74 = new javax.swing.JLabel();
+        l73 = new javax.swing.JLabel();
+        l72 = new javax.swing.JLabel();
+        l71 = new javax.swing.JLabel();
+        l81 = new javax.swing.JLabel();
+        l82 = new javax.swing.JLabel();
+        l83 = new javax.swing.JLabel();
+        l84 = new javax.swing.JLabel();
+        l85 = new javax.swing.JLabel();
+        l86 = new javax.swing.JLabel();
+        l87 = new javax.swing.JLabel();
+        l88 = new javax.swing.JLabel();
+        l89 = new javax.swing.JLabel();
+        l90 = new javax.swing.JLabel();
+        l100 = new javax.swing.JLabel();
+        l99 = new javax.swing.JLabel();
+        l98 = new javax.swing.JLabel();
+        l97 = new javax.swing.JLabel();
+        l96 = new javax.swing.JLabel();
+        l95 = new javax.swing.JLabel();
+        l94 = new javax.swing.JLabel();
+        l93 = new javax.swing.JLabel();
+        l92 = new javax.swing.JLabel();
+        l91 = new javax.swing.JLabel();
+        base = new javax.swing.JLabel();
+        finish_label = new javax.swing.JLabel();
+        diceButton = new javax.swing.JButton();
+        start_label = new javax.swing.JLabel();
+        colourModeChange = new javax.swing.JButton();
+        newGame = new javax.swing.JButton();
+        statusTeller = new javax.swing.JLabel();
+        turnTeller = new javax.swing.JLabel();
+        statusImageLabel = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Snakes & Ladders");
+        setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        mainPanel.setBackground(new java.awt.Color(0, 0, 0));
+        mainPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                mainPanelKeyPressed(evt);
+            }
+        });
+        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        finish.setFont(new java.awt.Font("Tahoma", 1, 18));
+        finish.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        mainPanel.add(finish, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 70));
+        finish.getAccessibleContext().setAccessibleParent(this);
+
+        start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/4_all.png"))); // NOI18N
+        start.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        mainPanel.add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 70, 70));
+
+        boardPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        l1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 660, 70, 70));
+
+        l2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 660, 70, 70));
+
+        l3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 660, 70, 70));
+
+        l4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 660, 70, 70));
+
+        l5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 660, 70, 70));
+
+        l6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 660, 70, 70));
+
+        l7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 660, 70, 70));
+
+        l8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 660, 70, 70));
+
+        l9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 660, 70, 70));
+
+        l10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l10, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 660, 70, 70));
+
+        l20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 70, 70));
+
+        l19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 590, 70, 70));
+
+        l18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l18, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 590, 70, 70));
+
+        l17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, 70, 70));
+
+        l16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l16, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 590, 70, 70));
+
+        l15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 590, 70, 70));
+
+        l14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l14, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 590, 70, 70));
+
+        l13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l13, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 590, 70, 70));
+
+        l12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l12, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 590, 70, 70));
+
+        l11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 590, 70, 70));
+
+        l21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 70, 70));
+
+        l22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 520, 70, 70));
+
+        l23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l23, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 520, 70, 70));
+
+        l24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l24, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 70, 70));
+
+        l25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l25, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 520, 70, 70));
+
+        l26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l26, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 520, 70, 70));
+
+        l27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l27, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 520, 70, 70));
+
+        l28.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l28, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 520, 70, 70));
+
+        l29.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l29, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 520, 70, 70));
+
+        l30.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l30, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 520, 70, 70));
+
+        l40.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l40, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 70, 70));
+
+        l39.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l39, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 70, 70));
+
+        l38.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l38, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, 70, 70));
+
+        l37.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l37, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 70, 70));
+
+        l36.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l36, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 70, 70));
+
+        l35.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l35, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, 70, 70));
+
+        l34.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l34, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 70, 70));
+
+        l33.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l33, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 450, 70, 70));
+
+        l32.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l32, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, 70, 70));
+
+        l31.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l31, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 450, 70, 70));
+
+        l41.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l41, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 70, 70));
+
+        l42.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l42, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 70, 70));
+
+        l43.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l43, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 70, 70));
+
+        l44.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l44, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 380, 70, 70));
+
+        l45.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l45, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 70, 70));
+
+        l46.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l46, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 70, 70));
+
+        l47.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l47, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 70, 70));
+
+        l48.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l48, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, 70, 70));
+
+        l49.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l49, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 70, 70));
+
+        l50.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l50, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 380, 70, 70));
+
+        l60.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l60, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 70, 70));
+
+        l59.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l59, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 70, 70));
+
+        l58.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l58, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 70, 70));
+
+        l57.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l57, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 70, 70));
+
+        l56.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l56, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 70, 70));
+
+        l55.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l55, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 70, 70));
+
+        l54.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l54, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 70, 70));
+
+        l53.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l53, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 70, 70));
+
+        l52.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l52, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 70, 70));
+
+        l51.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l51, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 310, 70, 70));
+
+        l61.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l61, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 70, 70));
+
+        l62.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l62, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 70, 70));
+
+        l63.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l63, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 70, 70));
+
+        l64.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l64, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 70, 70));
+
+        l65.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l65, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 70, 70));
+
+        l66.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l66, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 70, 70));
+
+        l67.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l67, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 70, 70));
+
+        l68.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l68, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 70, 70));
+
+        l69.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l69, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 240, 70, 70));
+
+        l70.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l70, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 240, 70, 70));
+
+        l80.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l80, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 70, 70));
+
+        l79.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l79, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 70, 70));
+
+        l78.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l78, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 70, 70));
+
+        l77.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l77, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 70, 70));
+
+        l76.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l76, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 70, 70));
+
+        l75.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l75, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 70, 70));
+
+        l74.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l74, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 70, 70));
+
+        l73.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l73, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 70, 70));
+
+        l72.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l72, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 70, 70));
+
+        l71.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l71, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 70, 70));
+
+        l81.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l81, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 70, 70));
+
+        l82.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l82, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 70, 70));
+
+        l83.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l83, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 70, 70));
+
+        l84.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l84, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 70, 70));
+
+        l85.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l85, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 70, 70));
+
+        l86.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l86, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, 70, 70));
+
+        l87.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l87, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, 70, 70));
+
+        l88.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l88, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 70, 70));
+
+        l89.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l89, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, 70, 70));
+
+        l90.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l90, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, 70, 70));
+
+        l100.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l100, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 70, 70));
+
+        l99.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l99, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 70, 70));
+
+        l98.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l98, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 70, 70));
+
+        l97.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l97, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 70, 70));
+
+        l96.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l96, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 70, 70));
+
+        l95.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l95, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 70, 70));
+
+        l94.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l94, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 70, 70));
+
+        l93.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l93, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 70, 70));
+
+        l92.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l92, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, 70, 70));
+
+        l91.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        boardPanel.add(l91, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, 70, 70));
+
+        base.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/snakes_700x700.png"))); // NOI18N
+        base.setText("jLabel1");
+        base.setPreferredSize(new java.awt.Dimension(700, 700));
+        boardPanel.add(base, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+
+        mainPanel.add(boardPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, -30, -1, 730));
+
+        finish_label.setFont(new java.awt.Font("Tahoma", 1, 18));
+        finish_label.setForeground(new java.awt.Color(255, 0, 0));
+        finish_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        finish_label.setText("FINISH");
+        mainPanel.add(finish_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 70, 40));
+
+        diceButton.setFont(new java.awt.Font("Tahoma", 1, 18));
+        diceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(153, 0, 51)));
+        diceButton.setFocusable(false);
+        diceButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        diceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                diceButtonActionPerformed(evt);
+            }
+        });
+        mainPanel.add(diceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 170, 144, 144));
+
+        start_label.setFont(new java.awt.Font("Tahoma", 1, 18));
+        start_label.setForeground(new java.awt.Color(255, 0, 0));
+        start_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        start_label.setText("START");
+        mainPanel.add(start_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 70, 40));
+
+        colourModeChange.setBackground(new java.awt.Color(0, 0, 0));
+        colourModeChange.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 24));
+        colourModeChange.setForeground(new java.awt.Color(255, 0, 0));
+        colourModeChange.setText("Light Mode");
+        colourModeChange.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 255, 0)));
+        colourModeChange.setFocusable(false);
+        colourModeChange.setOpaque(false);
+        colourModeChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                colourModeChangeActionPerformed(evt);
+            }
+        });
+        mainPanel.add(colourModeChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 200, 50));
+
+        newGame.setBackground(new java.awt.Color(0, 0, 0));
+        newGame.setFont(new java.awt.Font("MS Reference Sans Serif", 1, 24));
+        newGame.setForeground(new java.awt.Color(255, 0, 0));
+        newGame.setText("New Game");
+        newGame.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 255, 0)));
+        newGame.setFocusable(false);
+        newGame.setOpaque(false);
+        newGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGameActionPerformed(evt);
+            }
+        });
+        newGame.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                newGameKeyPressed(evt);
+            }
+        });
+        mainPanel.add(newGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 200, 50));
+
+        statusTeller.setBackground(new java.awt.Color(0, 0, 0));
+        statusTeller.setForeground(new java.awt.Color(255, 255, 255));
+        statusTeller.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainPanel.add(statusTeller, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 410, 200, 40));
+
+        turnTeller.setBackground(new java.awt.Color(0, 0, 0));
+        turnTeller.setForeground(new java.awt.Color(255, 255, 255));
+        turnTeller.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mainPanel.add(turnTeller, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 200, 40));
+        mainPanel.add(statusImageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 470, 200, 200));
+
+        titleLabel.setFont(new java.awt.Font("MS Reference Sans Serif", 3, 36));
+        titleLabel.setForeground(new java.awt.Color(255, 0, 0));
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(5, 5, 5, 5, new java.awt.Color(255, 255, 0)));
+        mainPanel.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 134, 70, 420));
+        String text = "Snakes & Ladders";
+        TextIcon t1 = new TextIcon(titleLabel, text, TextIcon.Layout.HORIZONTAL);
+        RotatedIcon r1 = new RotatedIcon(t1, RotatedIcon.Rotate.UP);
+        titleLabel.setIcon( r1 );
+
+        getContentPane().add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 700));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void diceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diceButtonActionPerformed
+        System.out.println("Dice Rolled");
+        if(!rollDice){
+            System.out.println("Wait Please!!");
+            return;
+        }
+        diceButton.setFont(new java.awt.Font("Tahoma", 1, 72));
+        diceButton.setText("");
+        rollDice=false;
+        
+        numberRolled = dice.roll() + 1;
+        //numberRolled=6;
+        diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/rollingDice.gif")));
+        System.out.print(numberRolled);
+        timer = new Timer(2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if(!timer.isRunning()){
+                    System.out.println("Printing on dice: ");
+                    switch(numberRolled){
+                        case 1:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_1.png")));
+                        break;
+                        case 2:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_2.png")));
+                        break;
+                        case 3:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_3.png")));
+                        break;
+                        case 4:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_4.png")));
+                        break;
+                        case 5:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_5.png")));
+                        break;
+                        case 6:diceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/dice_6.png")));
+                        break;
+                    }
+                    if(numberRolled==6)
+                        lastThreeThrows.add(6);
+                    else
+                        lastThreeThrows.clear();
+                    afterDice();
+                }
+            }
+
+
+        });
+
+        timer.setRepeats(false);
+        timer.start();
+        System.out.println(" "+numberRolled);
+        //diceButton.setText(""+numberRolled);
+    }//GEN-LAST:event_diceButtonActionPerformed
+
+    private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
+        System.out.println("Launchin New Game");
+        newGame.setText("Restart");
+        if(!gameFinished){
+            int choice = JOptionPane.showConfirmDialog(getParent(), "Are you sure?");
+            System.out.print("Choice = "+choice);
+            if(choice==0){
+                gameFinished = true;
+                JOptionPane.showMessageDialog(getParent(), "Restarting..");
+                clearBoard();
+                start();
+            } else{
+                JOptionPane.showMessageDialog(getParent(), "Continue Playing!!");
+            }
+        } else{
+            gameFinished = false;
+            clearBoard();
+            start();
+        }
+}//GEN-LAST:event_newGameActionPerformed
+
+    private void colourModeChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colourModeChangeActionPerformed
+        Color bg = null;
+        Color fg = null;
+        Color headingBorder = null;
+        Color buttonBorder = null;
+        Color turnTellerFG = null;
+        if(currentMode.equals("Dark")){
+            colourModeChange.setText("Dark Mode");
+            currentMode="Light";
+            bg = new Color(255, 255, 255);//white
+            fg = new Color(255,0,0);//red
+            headingBorder = new Color(0,0,0);//black
+            buttonBorder = new Color(0,0,0);//black
+            turnTellerFG = new Color(0,0,0);//black;
+        } else if(currentMode.equals("Light")){
+            colourModeChange.setText("Light Mode");
+            currentMode="Dark";
+            bg = new Color(0,0,0);//black
+            fg = new Color(255,255,0);//yellow
+            headingBorder = new Color(255, 255, 0);//yellow
+            buttonBorder = new Color(255, 0, 0);//red
+            turnTellerFG = new Color(255,255,255);//white
+        }
+        mainPanel.setBackground(bg);
+        titleLabel.setBackground(bg);
+        titleLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(5, 5, 5, 5, headingBorder));
+        newGame.setBackground(bg);
+        colourModeChange.setBackground(bg);
+        colourModeChange.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, buttonBorder));
+        newGame.setForeground(fg);
+        newGame.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, buttonBorder));
+        colourModeChange.setForeground(fg);
+        boardPanel.setBackground(bg);
+        turnTeller.setForeground(turnTellerFG);
+
+    }//GEN-LAST:event_colourModeChangeActionPerformed
+
+    private void newGameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newGameKeyPressed
+                // TODO add your handling code here:
+    }//GEN-LAST:event_newGameKeyPressed
+
+    private void mainPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mainPanelKeyPressed
+
+    }//GEN-LAST:event_mainPanelKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
+    public void start(){
+        System.out.println("Starting Game");
+        currentPlayer = null;
+        numberRolled = 0;
+        k=0;
+        winningPosition = 1;
+        winners = "Pos Name(Color)";
+        numberOfPlayers = Integer.parseInt(JOptionPane.showInputDialog("Enter Number of Players"));
+            while(numberOfPlayers<2 || numberOfPlayers>4){
+                numberOfPlayers = Integer.parseInt(JOptionPane.showInputDialog("Invalid Number of Player!!\nEnter Number of Players(2-4)"));
+            }
+            System.out.println("in start");
+            if(numberOfPlayers==2){
+                Collections.addAll(turnList, 0, 1);
+            }
+            else if(numberOfPlayers==3){
+                Collections.addAll(turnList, 0, 2, 1);
+            }
+            else if(numberOfPlayers==4){
+                Collections.addAll(turnList, 0, 2, 1, 3);
+            }
+            playersLeft=numberOfPlayers;
+            takePlayerName();
+            initializeBoard();
+            beforeDice(true);
+
+    }
+    public void takePlayerName(){
+        System.out.println("Taking Player Name");
+        int i;
+        for( i = 0; i<numberOfPlayers; i++){
+            String playerName = JOptionPane.showInputDialog("Enter Player "+(i+1)+" Name");
+            playerNames.add(playerName);
+            JOptionPane.showMessageDialog(getParent(),playerName+"'s Team Color is "+playerColors.get(i));
+            Player newPlayer = new Player(playerColors.get(i), playerNames.get(i), start);
+            players.add(newPlayer);
+            System.out.println(playerNames.get(i));
+        }
+    }
+    public void initializeBoard(){
+        System.out.println("Initializing Board");
+        switch(numberOfPlayers){
+            case 2: start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_blue_green.png")));
+                    start.setText("BG");
+                    break;
+            case 3: start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/3_blue_green_red.png")));
+                    start.setText("BGR");
+                    break;
+            case 4: start.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/4_all.png")));
+                    start.setText("BGRY");
+                    break;
+            default: System.out.println("Invalid Number of Players!!");
+        }
+        diceButton.setText("Press Me");
+    }
+    public Player turnSelector(){
+       System.out.println("in turnSelector");
+       int index = (k++)%(numberOfPlayers);  
+       int playerIndex= turnList.get(index);
+       Player nextPlayer = players.get(playerIndex); 
+       while(nextPlayer.inPlay==false){
+           index = (index+1)%numberOfPlayers;
+           playerIndex= turnList.get(index);
+           nextPlayer = players.get(playerIndex);
+       }
+       k=index+1;
+       return nextPlayer;
+    }
+    public void beforeDice(boolean getNext){
+        System.out.println("in beforeDice");
+        if(getNext==true){
+            currentPlayer = turnSelector();
+            turnTellerString = "";
+        }
+        else
+            turnTellerString = " again!!";
+        turnTeller.setText(currentPlayer.playerName+"'s ("+currentPlayer.playerColor+"'s) turn"+turnTellerString);
+        char c = currentPlayer.playerColor.charAt(0);
+        switch(c){
+            case 'R':
+                diceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(255, 0, 0)));
+                break;
+            case 'Y':
+                diceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(255, 255, 0)));
+                break;
+            case 'B':
+                diceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 0, 255)));
+                break;
+            case 'G':
+                diceButton.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 0)));
+                break;
+        }
+        rollDice=true;
+    }
+    public void afterDice(){
+        System.out.println("in afterDice");
+        statusTeller.setText("");
+
+        if(threeConsecutiveSixes()){
+            statusTeller.setText(currentPlayer.playerColor+" threw "+numberRolled+" - Three Consecutive 6s!!");
+            if(currentMode.equals("Dark")){
+                        statusImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/three_consecutive_sixes.gif")));
+                    }else{
+                        statusImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/three_consecutive_sixes_lite.gif")));
+                    }
+            timer = new Timer(2000, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    beforeDice(true);
+                    statusImageLabel.setIcon(null);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+            return;
+
+        }
+        if(!movesPossible()){
+            statusTeller.setText(currentPlayer.playerColor+" threw "+numberRolled+" - No Possible Moves!!");
+            statusImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/no_move_possible.gif")));
+            timer = new Timer(1000, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    beforeDice(true);
+                    statusImageLabel.setIcon(null);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
+            return;
+        }
+        move();
+    }
+    public void move(){
+        System.out.println("In move");
+        JLabel currentLabel = currentPlayer.pawnPosition;
+        JLabel destLabel = null;
+        boolean threwSix= false;
+        if(numberRolled==6)
+            threwSix=true;
+        int calledIndex = track.indexOf(currentLabel);
+        int destIndex = calledIndex + numberRolled;
+
+
+        destLabel = track.get(destIndex);
+        removePawnFromLabel(currentLabel);
+        addPawnToLabel(destLabel);
+        int snakeIndex = checkSnakeBite(destLabel);
+        int ladderIndex = checkLadder(destLabel);
+        if(snakeIndex >= 0){
+            snakeBite(snakeIndex);
+            threwSix = false;
+        }
+        else if(ladderIndex >=0 ){
+            climbLadder(ladderIndex);
+        }
+
+        if(destIndex == 99){
+            removePawnFromLabel(currentLabel);
+            addPawnToLabel(finish);
+            removePawnFromLabel(destLabel);
+            threwSix = false;
+            JOptionPane.showMessageDialog(getParent(),"Congrats!!"+currentPlayer.playerName+" is winner " + winningPosition++ +" !!!");
+            winners = winners+"\n"+(winningPosition-1)+"   "+currentPlayer.playerName+"   "+currentPlayer.playerColor;
+            currentPlayer.inPlay=false;
+            playersLeft--;
+            if(playersLeft==1){
+                gameFinished = true;
+                rollDice = false;
+                JOptionPane.showMessageDialog(getParent(),"Game over!!");
+                Player lastPlayer = null;
+                for(int i= 0; i<numberOfPlayers; i++)
+                    if(players.get(i).inPlay==true)
+                        lastPlayer = players.get(i);
+                winners = winners+"\n"+winningPosition+"   "+lastPlayer.playerName+"   "+lastPlayer.playerColor;
+                JOptionPane.showMessageDialog(getParent(),winners);
+                return;
+            }
+        }
+        if(threwSix==true)
+            beforeDice(false);
+        else
+            beforeDice(true);
+
+    }
+    public void removePawnFromLabel(JLabel currentLabel){
+        System.out.println("Removing Pawn");
+        String presentText = currentLabel.getText();
+        String newText = presentText.replaceFirst(currentPlayer.playerColor.charAt(0)+"", "");
+        currentLabel.setText(newText);
+        setLabelImage(currentLabel);
+    }
+    public void addPawnToLabel(JLabel destLabel){
+        System.out.println("Adding Pawn");
+        String presentText = destLabel.getText();
+        String newText = presentText+""+currentPlayer.playerColor.charAt(0);
+        destLabel.setText(newText);
+        setLabelImage(destLabel);
+        currentPlayer.pawnPosition = destLabel;
+    }
+    public int checkSnakeBite(JLabel destLabel){
+        System.out.println("Checking Snake Bite");
+        for(int i = 0; i<snakes.size(); i++){
+            if(snakes.get(i).get(0).equals(destLabel)){
+                System.out.println("Snake Bite : true: "+i);
+                return i;
+            }                
+        }
+        return -1;
+    }
+    public void snakeBite(int snakeIndex){
+        System.out.println("Bitten By Snake");
+        ArrayList<JLabel> bitingSnake = snakes.get(snakeIndex);
+        statusTeller.setText("Snake Bite!!!");
+        statusImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/snakeBite.gif")));
+        timer = new Timer(2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                statusImageLabel.setIcon(null);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+        removePawnFromLabel(bitingSnake.get(0));
+        addPawnToLabel(bitingSnake.get(bitingSnake.size()-1));
+
+    }
+    public int checkLadder(JLabel destLabel){
+        System.out.println("Checking Ladder");
+        for(int i = 0; i<ladders.size(); i++){
+            if(ladders.get(i).get(0).equals(destLabel)){
+                System.out.println("Ladder Climb : true: "+i);
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void climbLadder(int ladderIndex){
+        System.out.println("Climbing Ladder");
+        ArrayList<JLabel> ladderToClimb = ladders.get(ladderIndex);
+        statusTeller.setText("Climbing Ladder!!");
+        statusImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/climbLadder.gif")));
+        timer = new Timer(2000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                statusImageLabel.setIcon(null);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+        removePawnFromLabel(ladderToClimb.get(0));
+        addPawnToLabel(ladderToClimb.get(ladderToClimb.size()-1));
+    }
+    public boolean threeConsecutiveSixes(){
+        System.out.println("in threeConsecutiveSixes");
+        if(lastThreeThrows.size()==3){
+            lastThreeThrows.clear();
+            return true;
+        }
+        return false;
+    }
+    public boolean movesPossible(){
+        System.out.println("Checking Possible Moves");
+        if(currentPlayer.pawnPosition.equals(start)){
+            if(numberRolled==6 || numberRolled==1)
+                return true;
+            else
+                return false;
+        }
+        else{
+            JLabel currentPosition = currentPlayer.pawnPosition;
+            int indexInTrack = track.indexOf(currentPosition);
+            if(indexInTrack<0)
+                return false;
+            int boxLeft = track.size() - indexInTrack;
+            if(numberRolled<boxLeft)
+                return true;
+            else
+                return false;
+        }
+    }
+    public void clearBoard(){
+        System.out.println("Clearing Board");
+        for(int i=0; i<track.size(); i++){
+            track.get(i).setText("");
+            track.get(i).setIcon(null);
+        }
+        diceButton.setIcon(null);
+        diceButton.setText("");
+        finish.setIcon(null);
+        finish.setText("");
+        start.setIcon(null);
+        start.setText("");
+    }
+    public String sortedText(String text){
+         System.out.println("Sorting Text");
+         char tArray[] = text.toCharArray();
+         Arrays.sort(tArray);
+         text="";
+         for(int i = 0; i<tArray.length; i++)
+            text = text+tArray[i];
+         return text;
+    }
+    public void setLabelImage(JLabel label){
+        System.out.println("Setting Label Image "+label.getText());
+        if(label.getText().equals("")){
+            label.setIcon(null);
+            return;
+        }
+        String text = label.getText();
+        if(text.length()==1 || text.length()==4){
+            if(text.equals("B"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/1_blue.png")));
+            else if(text.equals("G"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/1_green.png")));
+            else if(text.equals("R"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/1_red.png")));
+            else if(text.equals("Y"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/1_yellow.png")));
+            else
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/4_all.png")));
+            return;
+        }
+        text = sortedText(text);//bgry
+        if(text.length()==2){
+            if(text.equals("BG"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_blue_green.png")));
+            else if(text.equals("BR"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_blue_red.png")));
+            else if(text.equals("BY"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_blue_yellow.png")));
+            else if(text.equals("GR"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_green_red.png")));
+            else if(text.equals("BG"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_green_yellow.png")));
+            else if(text.equals("BG"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/2_red_yellow.png")));
+            return;
+        }
+        if(text.length()==3){
+            if(text.equals("BGR"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/3_blue_green_red.png")));
+            else if(text.equals("BRY"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/3_blue_red_yellow.png")));
+            else if(text.equals("GRY"))
+                label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snakesandladders/3_green_red_yellow.png")));
+            return;
+        }
+
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Game().setVisible(true);
+                
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel base;
+    private javax.swing.JPanel boardPanel;
+    private javax.swing.JButton colourModeChange;
+    private javax.swing.JButton diceButton;
+    private javax.swing.JLabel finish;
+    private javax.swing.JLabel finish_label;
+    private javax.swing.JLabel l1;
+    private javax.swing.JLabel l10;
+    private javax.swing.JLabel l100;
+    private javax.swing.JLabel l11;
+    private javax.swing.JLabel l12;
+    private javax.swing.JLabel l13;
+    private javax.swing.JLabel l14;
+    private javax.swing.JLabel l15;
+    private javax.swing.JLabel l16;
+    private javax.swing.JLabel l17;
+    private javax.swing.JLabel l18;
+    private javax.swing.JLabel l19;
+    private javax.swing.JLabel l2;
+    private javax.swing.JLabel l20;
+    private javax.swing.JLabel l21;
+    private javax.swing.JLabel l22;
+    private javax.swing.JLabel l23;
+    private javax.swing.JLabel l24;
+    private javax.swing.JLabel l25;
+    private javax.swing.JLabel l26;
+    private javax.swing.JLabel l27;
+    private javax.swing.JLabel l28;
+    private javax.swing.JLabel l29;
+    private javax.swing.JLabel l3;
+    private javax.swing.JLabel l30;
+    private javax.swing.JLabel l31;
+    private javax.swing.JLabel l32;
+    private javax.swing.JLabel l33;
+    private javax.swing.JLabel l34;
+    private javax.swing.JLabel l35;
+    private javax.swing.JLabel l36;
+    private javax.swing.JLabel l37;
+    private javax.swing.JLabel l38;
+    private javax.swing.JLabel l39;
+    private javax.swing.JLabel l4;
+    private javax.swing.JLabel l40;
+    private javax.swing.JLabel l41;
+    private javax.swing.JLabel l42;
+    private javax.swing.JLabel l43;
+    private javax.swing.JLabel l44;
+    private javax.swing.JLabel l45;
+    private javax.swing.JLabel l46;
+    private javax.swing.JLabel l47;
+    private javax.swing.JLabel l48;
+    private javax.swing.JLabel l49;
+    private javax.swing.JLabel l5;
+    private javax.swing.JLabel l50;
+    private javax.swing.JLabel l51;
+    private javax.swing.JLabel l52;
+    private javax.swing.JLabel l53;
+    private javax.swing.JLabel l54;
+    private javax.swing.JLabel l55;
+    private javax.swing.JLabel l56;
+    private javax.swing.JLabel l57;
+    private javax.swing.JLabel l58;
+    private javax.swing.JLabel l59;
+    private javax.swing.JLabel l6;
+    private javax.swing.JLabel l60;
+    private javax.swing.JLabel l61;
+    private javax.swing.JLabel l62;
+    private javax.swing.JLabel l63;
+    private javax.swing.JLabel l64;
+    private javax.swing.JLabel l65;
+    private javax.swing.JLabel l66;
+    private javax.swing.JLabel l67;
+    private javax.swing.JLabel l68;
+    private javax.swing.JLabel l69;
+    private javax.swing.JLabel l7;
+    private javax.swing.JLabel l70;
+    private javax.swing.JLabel l71;
+    private javax.swing.JLabel l72;
+    private javax.swing.JLabel l73;
+    private javax.swing.JLabel l74;
+    private javax.swing.JLabel l75;
+    private javax.swing.JLabel l76;
+    private javax.swing.JLabel l77;
+    private javax.swing.JLabel l78;
+    private javax.swing.JLabel l79;
+    private javax.swing.JLabel l8;
+    private javax.swing.JLabel l80;
+    private javax.swing.JLabel l81;
+    private javax.swing.JLabel l82;
+    private javax.swing.JLabel l83;
+    private javax.swing.JLabel l84;
+    private javax.swing.JLabel l85;
+    private javax.swing.JLabel l86;
+    private javax.swing.JLabel l87;
+    private javax.swing.JLabel l88;
+    private javax.swing.JLabel l89;
+    private javax.swing.JLabel l9;
+    private javax.swing.JLabel l90;
+    private javax.swing.JLabel l91;
+    private javax.swing.JLabel l92;
+    private javax.swing.JLabel l93;
+    private javax.swing.JLabel l94;
+    private javax.swing.JLabel l95;
+    private javax.swing.JLabel l96;
+    private javax.swing.JLabel l97;
+    private javax.swing.JLabel l98;
+    private javax.swing.JLabel l99;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton newGame;
+    private javax.swing.JLabel start;
+    private javax.swing.JLabel start_label;
+    private javax.swing.JLabel statusImageLabel;
+    private javax.swing.JLabel statusTeller;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel turnTeller;
+    // End of variables declaration//GEN-END:variables
+
+}
